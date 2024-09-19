@@ -1,11 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>虚拟列表-不定高</title>
+  </head>
+  <body>
+    <main>
+      <h1 style="text-align: center">虚拟列表-不定高</h1>
+      <section id="container" style="height: 600px; position: relative; overflow-y: auto; background-color: aquamarine">
+        <div id="list"></div>
+      </section>
+    </main>
+  </body>
+  <script type="module">
+    import "./virtual-list-mul.js";
+  </script>
 </html>
