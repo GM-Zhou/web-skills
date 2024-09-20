@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>虚拟列表-不定高</title>
+    <style>
+      #list {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .list-item {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1 style="text-align: center">虚拟列表-不定高</h1>
+      <div id="list-container" style="height: 400px; overflow-y: auto">
+        <ul id="list">
+          <!-- 列表项将动态插入这里 -->
+        </ul>
+        <!-- 观察节点 -->
+        <div id="sentinel"></div>
+      </div>
+    </main>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const listContainer = document.getElementById("list-container");
+      const list = document.getElementById("list");
+      const sentinel = document.getElementById("sentinel");
+      let itemCount = 0;
+      const batchSize = 20;
+
+      // 添加新的项目到列表中
+      function addItems(count) {
+        for (let i = 0; i < count; i++) {
+          const listItem = document.createElement("li");
+          listItem.textContent = `Item ${itemCount + i + 1}`;
+          listItem.className = "list-item";
+          list.appendChild(listItem);
+        }
+        itemCount += count;
+      }
+
+      // 加载更多项目
+      const loadMore = (entries) => {
+        entries.forEach((entry) => {
+          console.log("entry", entry);
+          if (entry.isIntersecting) {
+            addItems(batchSize);
+          }
+        });
+      };
+
+      // 初始化IntersectionObserver
+      const observer = new IntersectionObserver(loadMore, {
+        root: listContainer,
+        rootMargin: "0px",
+        threshold: 1.0,
+      });
+
+      // 添加初始项目
+      // addItems(batchSize);
+
+      // 开始观察sentinel节点
+      observer.observe(sentinel);
+    });
+
+    
+  </script>
+</html>
