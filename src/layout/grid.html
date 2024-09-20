@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>grid</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      .wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: minmax(100px, auto);
+        grid-gap: 20px;
+      }
+
+      .one {
+        grid-column: 1 2;
+        background: #19caad;
+      }
+
+      .two {
+        /*   如果有重叠，就使用 z-index */
+        z-index: 1;
+        grid-row: 1 2;
+        background: #8cc7b5;
+      }
+
+      .three {
+        z-index: 2;
+        grid-row: 1 4;
+        background: #d1ba74;
+      }
+
+      .four {
+        grid-row: 2 5;
+        background: #bee7e9;
+      }
+
+      .five {
+        grid-row: 2 5;
+        background: #e6ceac;
+      }
+
+      .six {
+        grid-row: 4;
+        grid-column: 3;
+        background: #ecad9e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="one item">One <span class="icon">icon</span></div>
+      <div class="two item">Two</div>
+      <div class="three item">Three <span class="icon">icon</span></div>
+      <div class="four item">Four</div>
+      <div class="five item">Five <span class="icon">icon</span></div>
+      <div class="six item">Six</div>
+    </div>
+    <section>
+      <h1></h1>
+    </section>
+    <script>
+      const str =
+        '/Users/zgm/Documents/Web/learn/react/react-learn-lerna/node_modules/.pnpm/react-dom@18.2.0_react@18.2.0/node_modules/react-dom'
+      const isTopLevelNpmPackage = (str) => str.split(/[\\/]/).slice(-2)[0] === 'node_modules'
+
+      console.log(isTopLevelNpmPackage(str))
+    </script>
+  </body>
+</html>

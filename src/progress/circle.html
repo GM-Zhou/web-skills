@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Circle</title>
+    <style>
+      html {
+        font-size: 14px;
+      }
+      body {
+        --bg-color: #1a191a;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        background: var(--bg-color);
+      }
+
+      .container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+      }
+
+      .container > .box {
+        flex-basis: 25%;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6%;
+        background: #262424;
+      }
+
+      .container > .box > .circle {
+        --clr: #55efc4;
+        --i: 0%;
+        position: relative;
+        width: 150px;
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        border-radius: 50%;
+        background: conic-gradient(
+          from 0deg,
+          var(--clr) 0%,
+          var(--clr) var(--i),
+          #343239 var(--i),
+          #343239 100%
+        );
+      }
+
+      .container > .box > .circle::before {
+        content: "";
+        position: absolute;
+        inset: 0.5rem;
+        border-radius: 50%;
+        background-color: var(--bg-color);
+      }
+
+      .container > .box > .circle > .progress {
+        position: relative;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #fff;
+        /* z-index: 1; */
+        letter-spacing: 0.1rem;
+      }
+
+      .container > .box > .circle > .progress > small {
+        font-size: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        <div class="circle" style="--i: 45%">
+          <div class="progress">45<small>%</small></div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="circle" style="--i: 65%; --clr: #ff7675">
+          <div class="progress">65<small>%</small></div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="circle" style="--i: 85%; --clr: #0984e3">
+          <div class="progress">85<small>%</small></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
