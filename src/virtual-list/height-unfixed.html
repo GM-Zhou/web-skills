@@ -19,8 +19,8 @@
   </head>
   <body>
     <main>
-      <h1 style="text-align: center">虚拟列表-不定高</h1>
-      <div id="list-container" style="height: 400px; overflow-y: auto">
+      <!-- <h1 style="text-align: center">虚拟列表-不定高</h1> -->
+      <div id="list-container" style="height: 600px; overflow-y: auto">
         <ul id="list">
           <!-- 列表项将动态插入这里 -->
         </ul>
@@ -30,48 +30,47 @@
     </main>
   </body>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const listContainer = document.getElementById("list-container");
-      const list = document.getElementById("list");
-      const sentinel = document.getElementById("sentinel");
-      let itemCount = 0;
-      const batchSize = 20;
-
-      // 添加新的项目到列表中
-      function addItems(count) {
-        for (let i = 0; i < count; i++) {
-          const listItem = document.createElement("li");
-          listItem.textContent = `Item ${itemCount + i + 1}`;
-          listItem.className = "list-item";
-          list.appendChild(listItem);
-        }
-        itemCount += count;
-      }
-
-      // 加载更多项目
-      const loadMore = (entries) => {
+    const arr = Array.from({ length: 1000 }, (_, i) => i); // 假设有1000条数据
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
         entries.forEach((entry) => {
           console.log("entry", entry);
+          // 处理每个 entry 对象
           if (entry.isIntersecting) {
-            addItems(batchSize);
+            console.log("Element is visible");
+          } else {
+            console.log("Element is not visible");
           }
         });
-      };
+      },
+      {
+        root: document.getElementById("list-container"),
+      },
+    );
 
-      // 初始化IntersectionObserver
-      const observer = new IntersectionObserver(loadMore, {
-        root: listContainer,
-        rootMargin: "0px",
-        threshold: 1.0,
-      });
+    console.log("observer", observer);
 
-      // 添加初始项目
-      // addItems(batchSize);
+    const listContainer = document.getElementById("list-container");
+    const list = document.getElementById("list");
+    const sentinel = document.getElementById("sentinel");
+    const batchSize = 20;
 
-      // 开始观察sentinel节点
-      observer.observe(sentinel);
-    });
+    // 添加新的不定高项目到列表中
+    const renderList = (start, end) => {
+      for (let i = start; i <= end && i < arr.length; i++) {
+        const item = document.createElement("li");
+        item.classList.add("list-item");
+        item.textContent = `Item ${i}`;
+        Object.assign(item.style, {
+          // 高度随机，背景颜色随机
+          height: `${Math.floor(Math.random() * 200) + 100}px`,
+          background: `hsl(${Math.floor(Math.random() * 360)}, 50%, 50%)`,
+        });
+        list.appendChild(item);
+        observer.observe(item);
+      }
+    };
 
-    
+    renderList(0, 10);
   </script>
 </html>

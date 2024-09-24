@@ -32,16 +32,16 @@
     let startIndex = 0;
     let endIndex = startIndex + maxCount;
 
-    const renderList = (startIndex, endIndex) => {
+    const renderList = (si, ei) => {
       // 使用 fragment，将大量的插入操作放到内存中，完成后再一次性插入
       const fragment = document.createDocumentFragment();
-      // const occupiedHeight = startIndex * itemHeight;
+      // const occupiedHeight = si * itemHeight;
       // const occupy = document.createElement('div');
       // Object.assign(occupy.style, {
       //   height: `${occupiedHeight}px`,
       // });
       // fragment.appendChild(occupy);
-      for (let i = startIndex; i <= endIndex && i < arr.length; i++) {
+      for (let i = si; i <= ei && i < arr.length; i++) {
         const item = document.createElement('div');
         item.classList.add('list-item');
         Object.assign(item.style, {
