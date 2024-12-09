@@ -1,31 +1,36 @@
+import qs from 'qs';
+
 /**
  * 获取url参数
  * @param {string} url
  * @returns
  */
 export const getQuery = (url) => {
-	const result = {};
 	const search = url.split('?')[1];
-	if (search) {
-		search.split('&').forEach((ele) => {
-			const [key, value] = ele.split('=');
+	const result = qs.parse(search);
+	Object.keys(result).forEach((key) => {
+		if (typeof result[key] === 'string') {
 			try {
-				result[key] = decode(JSON.parse(value));
+				result[key] = JSON.parse(result[key]);
 			} catch {
-				result[key] = decode(value);
+				// do nothing
 			}
-		});
-	}
+		}
+	});
 	return result;
 };
 
-const decode = (param) => {
-	if (typeof param !== 'object') return decodeURIComponent(param);
-	if (Array.isArray(param)) return param.map(decode);
-	const result = {};
-	for (const key in param) {
-		result[key] = decode(param[key]);
-	}
-	return result;
-};
-
+// const deepJSONParse = (obj) => {
+// 	if (Array.isArray(obj)) return obj.map((item) => deepJSONParse(item));
+// 	if (typeof obj === 'object') {
+// 		Object.entries(obj).forEach(([key, value]) => {
+// 			obj[key] = deepJSONParse(value);
+// 		});
+// 		return obj;
+// 	}
+// 	try {
+// 		return JSON.parse(obj);
+// 	} catch {
+// 		return obj;
+// 	}
+// };
