@@ -1,76 +1,87 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>虚拟列表-不定高</title>
-    <style>
-      #list {
-        padding: 0;
-        margin: 0;
-        list-style: none;
-      }
 
-      .list-item {
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <!-- <h1 style="text-align: center">虚拟列表-不定高</h1> -->
-      <div id="list-container" style="height: 600px; overflow-y: auto">
-        <ul id="list">
-          <!-- 列表项将动态插入这里 -->
-        </ul>
-        <!-- 观察节点 -->
-        <div id="sentinel"></div>
-      </div>
-    </main>
-  </body>
-  <script>
-    const arr = Array.from({ length: 1000 }, (_, i) => i); // 假设有1000条数据
-    const observer = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          console.log("entry", entry);
-          // 处理每个 entry 对象
-          if (entry.isIntersecting) {
-            console.log("Element is visible");
-          } else {
-            console.log("Element is not visible");
-          }
-        });
-      },
-      {
-        root: document.getElementById("list-container"),
-      },
-    );
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>虚拟列表-不定高</title>
+  <style>
+    #list {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
 
-    console.log("observer", observer);
+    .list-item {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
 
-    const listContainer = document.getElementById("list-container");
-    const list = document.getElementById("list");
-    const sentinel = document.getElementById("sentinel");
-    const batchSize = 20;
+<body>
+  <main>
+    <!-- <h1 style="text-align: center">虚拟列表-不定高</h1> -->
+    <div id="list-container" style="height: 600px; overflow-y: auto">
+      <ul id="list">
+        <!-- 列表项将动态插入这里 -->
+      </ul>
+      <!-- 观察节点 -->
+      <div id="sentinel" style="height: 100px;"></div>
+    </div>
+  </main>
+</body>
+<script>
+  const arr = Array.from({ length: 1000 }, (_, i) => i); // 假设有1000条数据
+  const limit = 10;
+  let start = 0;
+  let end = limit;
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        // 处理每个 entry 对象
+        if (entry.isIntersecting) {
+          console.log("Element is visible");
+          start += limit;
+          end += limit;
+          if (end >= arr.length) end = arr.length - 1;
+          renderList(start, end)
+        } else {
+          console.log("Element is not visible");
+        }
+      });
+    },
+    {
+      root: document.getElementById("list-container"),
+      threshold: 0
+    },
+  );
 
-    // 添加新的不定高项目到列表中
-    const renderList = (start, end) => {
-      for (let i = start; i <= end && i < arr.length; i++) {
-        const item = document.createElement("li");
-        item.classList.add("list-item");
-        item.textContent = `Item ${i}`;
-        Object.assign(item.style, {
-          // 高度随机，背景颜色随机
-          height: `${Math.floor(Math.random() * 200) + 100}px`,
-          background: `hsl(${Math.floor(Math.random() * 360)}, 50%, 50%)`,
-        });
-        list.appendChild(item);
-        observer.observe(item);
-      }
-    };
 
-    renderList(0, 10);
-  </script>
+  const listContainer = document.getElementById("list-container");
+  const list = document.getElementById("list");
+  const sentinel = document.getElementById("sentinel");
+  const batchSize = 20;
+
+  // 添加新的不定高项目到列表中
+  const renderList = (start, end) => {
+    const fragment = document.createDocumentFragment();
+    for (let i = start; i < end && i < arr.length; i++) {
+      const item = document.createElement("li");
+      item.classList.add("list-item");
+      item.textContent = `Item ${i}`;
+      Object.assign(item.style, {
+        // 高度随机，背景颜色随机
+        height: `${Math.floor(Math.random() * 200) + 100}px`,
+        background: `hsl(${Math.floor(Math.random() * 360)}, 50%, 50%)`,
+      });
+      fragment.appendChild(item);
+    }
+    list.appendChild(fragment);
+  };
+
+  observer.observe(document.querySelector("#sentinel"));
+  renderList(0, 10);
+</script>
+
 </html>

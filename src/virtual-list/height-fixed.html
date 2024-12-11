@@ -1,79 +1,82 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>虚拟列表（定高）</title>
-    <style>
-      body,
-      p {
-        margin: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <h1 style="margin: 1rem 0; text-align: center">虚拟列表（定高）</h1>
-      <section class="container" style="height: 600px; overflow-y: auto; background: #2cb5ba">
-        <div class="list-container" style="position: relative"></div>
-      </section>
-    </main>
-  </body>
-  <script>
-    /* 定高虚拟列表 */
-    const arr = Array.from({ length: 1000 }, (_, i) => i); // 假设有1000条数据
-    const itemHeight = 80;
-    const container = document.querySelector('.container');
-    const listContainer = document.querySelector('.list-container');
-    const totalHeight = itemHeight * arr.length;
-    const maxCount = Math.ceil(container.clientHeight / itemHeight) + 1;
-    listContainer.style.height = `${totalHeight}px`;
 
-    let startIndex = 0;
-    let endIndex = startIndex + maxCount;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>虚拟列表（定高）</title>
+  <style>
+    body,
+    p {
+      margin: 0;
+    }
+  </style>
+</head>
 
-    const renderList = (si, ei) => {
-      // 使用 fragment，将大量的插入操作放到内存中，完成后再一次性插入
-      const fragment = document.createDocumentFragment();
-      // const occupiedHeight = si * itemHeight;
-      // const occupy = document.createElement('div');
-      // Object.assign(occupy.style, {
-      //   height: `${occupiedHeight}px`,
-      // });
-      // fragment.appendChild(occupy);
-      for (let i = si; i <= ei && i < arr.length; i++) {
-        const item = document.createElement('div');
-        item.classList.add('list-item');
-        Object.assign(item.style, {
-          position: 'absolute',
-          transform: `translateY(${i * itemHeight}px)`,
-          background: '#3498db',
-          width: '100%',
-          height: `${itemHeight}px`,
-        });
-        const p = document.createElement('p');
-        p.textContent = `Item ${i}`;
-        item.appendChild(p);
+<body>
+  <main>
+    <h1 style="margin: 1rem 0; text-align: center">虚拟列表（定高）</h1>
+    <section class="container" style="height: 600px; overflow-y: auto; background: #2cb5ba">
+      <div class="list-container" style="position: relative"></div>
+    </section>
+  </main>
+</body>
+<script>
+  /* 定高虚拟列表 */
+  const arr = Array.from({ length: 1000 }, (_, i) => i); // 假设有1000条数据
+  const itemHeight = 80;
+  const container = document.querySelector('.container');
+  const listContainer = document.querySelector('.list-container');
+  const totalHeight = itemHeight * arr.length;
+  const maxCount = Math.ceil(container.clientHeight / itemHeight) + 1;
+  listContainer.style.height = `${totalHeight}px`;
 
-        fragment.appendChild(item);
-      }
-      listContainer.innerHTML = '';
-      listContainer.appendChild(fragment);
-    };
+  let startIndex = 0;
+  let endIndex = startIndex + maxCount;
 
-    const onScroll = (e) => {
+  const renderList = (si, ei) => {
+    // 使用 fragment，将大量的插入操作放到内存中，完成后再一次性插入
+    const fragment = document.createDocumentFragment();
+    // const occupiedHeight = si * itemHeight;
+    // const occupy = document.createElement('div');
+    // Object.assign(occupy.style, {
+    //   height: `${occupiedHeight}px`,
+    // });
+    // fragment.appendChild(occupy);
+    for (let i = si; i <= ei && i < arr.length; i++) {
+      const item = document.createElement('div');
+      item.classList.add('list-item');
+      Object.assign(item.style, {
+        position: 'absolute',
+        transform: `translateY(${i * itemHeight}px)`,
+        background: '#3498db',
+        width: '100%',
+        height: `${itemHeight}px`,
+      });
+      const p = document.createElement('p');
+      p.textContent = `Item ${i}`;
+      item.appendChild(p);
+
+      fragment.appendChild(item);
+    }
+    listContainer.innerHTML = '';
+    listContainer.appendChild(fragment);
+  };
+
+  const onScroll = (e) => {
+    requestAnimationFrame(() => {
       const scrollTop = e.target.scrollTop;
       const newStartIndex = Math.floor(scrollTop / itemHeight);
       if (newStartIndex === startIndex) return;
-      requestAnimationFrame(() => {
-        startIndex = newStartIndex;
-        endIndex = Math.min(arr.length - 1, startIndex + maxCount);
-        renderList(startIndex, endIndex);
-      });
-    };
+      startIndex = newStartIndex;
+      endIndex = Math.min(arr.length - 1, startIndex + maxCount);
+      renderList(startIndex, endIndex);
+    });
+  };
 
-    container.addEventListener('scroll', onScroll);
-    renderList(startIndex, endIndex); // 初始渲染
-  </script>
-  <script></script>
+  container.addEventListener('scroll', onScroll);
+  renderList(startIndex, endIndex); // 初始渲染
+</script>
+<script></script>
+
 </html>
