@@ -19,18 +19,3 @@ export const getQuery = (url) => {
 	});
 	return result;
 };
-
-// const deepJSONParse = (obj) => {
-// 	if (Array.isArray(obj)) return obj.map((item) => deepJSONParse(item));
-// 	if (typeof obj === 'object') {
-// 		Object.entries(obj).forEach(([key, value]) => {
-// 			obj[key] = deepJSONParse(value);
-// 		});
-// 		return obj;
-// 	}
-// 	try {
-// 		return JSON.parse(obj);
-// 	} catch {
-// 		return obj;
-// 	}
-// };

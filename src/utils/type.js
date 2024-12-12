@@ -1,0 +1,11 @@
+export const isObj = (v) => Object.prototype.toString.call(v) === '[object Object]';
+export const isArr = (v) => Array.isArray(v);
+export const isStr = (v) => typeof v === 'string';
+export const isNum = (v) => typeof v === 'number';
+export const isBool = (v) => typeof v === 'boolean';
+export const isFunc = (v) => typeof v === 'function';
+export const isNull = (v) => v === null;
+export const isUndefined = (v) => v === undefined;
+export const isReg = (v) => v instanceof RegExp;
+export const isDate = (v) => v instanceof Date;
+export const isError = (v) => v instanceof Error;

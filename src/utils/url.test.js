@@ -52,7 +52,7 @@ describe('getQuery', () => {
 			),
 		).toEqual({
 			name: 'zgm',
-			age: [1, 2, 3, "{\"age\":18}"],
+			age: [1, 2, 3, '{"age":18}'],
 		});
 	});
 	test('multiple', () => {
