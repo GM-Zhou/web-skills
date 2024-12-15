@@ -19,3 +19,9 @@ export const getQuery = (url) => {
 	});
 	return result;
 };
+
+export const addQuery = (url, query) => {
+	const search = url.split('?')[1];
+	const result = qs.parse(search);
+	return `${url}?${qs.stringify({ ...result, ...query })}`;
+};

@@ -2,23 +2,6 @@
 
 import { getQuery } from './query';
 
-// test('getQuery', () => {
-// 	const url =
-// 		'https://www.baidu.com/?a=1&b=2&c=3&rsv_iqid=0xabcf402e01cd47a9&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&rqlang=&tn=baiduhome_pg&ch=&rsv_enter=0&rsv_btype=i&rsv_dl=ib&inputT=1113';
-// 	const result = getQuery(url);
-// 	expect(result.rsv_iqid).toEqual('0xabcf402e01cd47a9');
-// });
-
-// // 更复杂的用例，参数包含中文、回跳 www.baidu.com 并带参数、特殊字符、空格、数字、bool 等
-// test('multiple', () => {
-// 	const target =
-// 		'https://zhidao.baidu.com/question/504901145736526124.html?qbl=relate_question_0&word=%E9%98%BF%E6%96%AF%E8%92%82%E8%8A%AC';
-// 	const url = `https://www.baidu.com/s?wd=%E9%98%BF%E6%96%AF%E8%92%82%E8%8A%AC&rsv_spt=1&url=${encodeURIComponent(target)}&rsv_iqid=0xabcf402e01cd47a9&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&rqlang=&tn=baiduhome_pg&ch=&rsv_enter=0&rsv_btype=i&rsv_dl=ib&inputT=1113`;
-// 	const result = getQuery(url);
-// 	expect(result.url).toEqual(target);
-// 	expect(result.rsv_iqid).toEqual('0xabcf402e01cd47a9');
-// });
-
 describe('getQuery', () => {
 	it('should return empty object when url is empty', () => {
 		expect(getQuery('')).toEqual({});
