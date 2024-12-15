@@ -1,5 +1,3 @@
-// 测试 getQUery
-
 import { getQuery } from './query';
 
 describe('getQuery', () => {
