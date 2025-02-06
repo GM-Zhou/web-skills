@@ -10,12 +10,10 @@ class TaskQueue {
 	}
 
 	start = async () => {
-		console.log('start');
 		if (this.isRunning || !this.queue.length) return;
 		this.isRunning = true;
 		while (this.index < this.queue.length) {
 			if (!this.isRunning) return this.results;
-			console.log('this.index :>> ', this.index);
 			const task = this.queue[this.index];
 			const result = await task();
 			this.results.push(result);
@@ -27,7 +25,6 @@ class TaskQueue {
 	};
 
 	pause = () => {
-		console.log('pause');
 		if (!this.isRunning || !this.queue.length) return;
 		this.isRunning = false;
 	};
@@ -38,6 +35,7 @@ for (let i = 0; i < 10; i++) {
 	tasks.push(async () => {
 		return new Promise((resolve) => {
 			setTimeout(() => {
+				console.log(`task ${i} done`);
 				resolve(`task ${i} done`);
 			}, 500);
 		});
