@@ -52,6 +52,10 @@
   const slider = document.querySelector('.slider');
   const slides = [];
 
+
+  /**
+   * 使用 translateX 来保证后续移动某个 slide 时性能更好，不必触发整个 Swipe 的重排
+   */
   for (let i = 1; i <= count; i++) {
     const slide = document.createElement('div');
     slide.classList.add('slide');
@@ -66,7 +70,8 @@
     const fontColor = Math.floor(Math.random() * 256);
     slide.style.color = `rgb(${fontColor}, ${fontColor}, ${fontColor})`;
     // 设置 translate
-    slide.style.transform = `translateX(${i * SCREEN_WIDTH / count})`;
+    // slide.style.transform = `translateX(${i * SCREEN_WIDTH / count})`;
+
     slides.push(slide);
     slider.appendChild(slide);
   }
