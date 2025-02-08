@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .container {
+      width: 100vw;
+      overflow-x: auto;
+    }
+
+    .slider {
+      display: flex;
+    }
+
+    .slide {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      aspect-ratio: 16/9;
+      font-size: 24px;
+      border-radius: 24px;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="slider">
+    <!-- <div class="slide">Slide 1</div>
+    <div class="slide">Slide 2</div>
+    <div class="slide">Slide 3</div>
+    <div class="slide">Slide 4</div>
+    <div class="slide">Slide 5</div> -->
+  </section>
+</body>
+
+<script>
+  const SCREEN_WIDTH = window.innerWidth;
+  const count = 5;
+  const slider = document.querySelector('.slider');
+  const slides = [];
+
+  for (let i = 1; i <= count; i++) {
+    const slide = document.createElement('div');
+    slide.classList.add('slide');
+    slide.textContent = `Slide ${i}`;
+
+    // 随机背景色
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    slide.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    // 随机字体颜色
+    const fontColor = Math.floor(Math.random() * 256);
+    slide.style.color = `rgb(${fontColor}, ${fontColor}, ${fontColor})`;
+    // 设置 translate
+    slide.style.transform = `translateX(${i * SCREEN_WIDTH / count})`;
+    slides.push(slide);
+    slider.appendChild(slide);
+  }
+
+  // let currentSlide = 0;
+
+  // function nextSlide() {
+  //   slides[currentSlide].style.transform = 'translateX(-100%)';
+  //   currentSlide = (currentSlide + 1) % count;
+  //   slides[currentSlide].style.transform = 'translateX(0)';
+  // }
+
+  // setInterval(nextSlide, 3000);
+</script>
+
+</html>
