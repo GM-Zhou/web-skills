@@ -1,151 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>flex</title>
-    <style>
-      body {
-        width: 100vw;
-        height: 100vh;
-        padding: 0;
-        margin: 0;
-      }
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>flex</title>
+		<style>
+			body {
+				width: 100vw;
+				height: 100vh;
+				padding: 0;
+				margin: 0;
+			}
 
-      .flex-box {
-        display: flex;
+			.flex-box {
+				display: flex;
+				justify-content: space-between;
+			}
 
-        /* width: 100%;
-        height: 100%; */
-        justify-content: space-between;
-      }
+			.flex-box > .flex-item:nth-child(2) {
+				background-color: beige;
+			}
 
-      .flex-box > .flex-item:nth-child(2) {
-        background-color: beige;
-      }
+			.flex-box > .flex-item:nth-child(3) {
+				background-color: aquamarine;
+			}
 
-      .flex-box > .flex-item:nth-child(3) {
-        background-color: aquamarine;
-      }
+			/* last-child，既是父元素的最后一个子元素，也是兄弟元素的最后一个 */
 
-      /* last-child，既是父元素的最后一个子元素，也是兄弟元素的最后一个 */
-
-      /* last-of-type，兄弟元素的最后一个 */
-      .flex-box > .flex-item:first-child {
-        flex: 0 0 200px;
-        background-color: aqua;
-      }
-
-      /* .flex-box > .flex-item:last-child {
-      } */
-
-      .text {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-        text-align: left;
-      }
-
-      .flex-box2 {
-        display: flex;
-      }
-
-      .flex-box2 > .flex-item2 {
-        /* place-self: center; */
-        align-self: center;
-      }
-
-      .carousal {
-        margin-top: 50px;
-        display: flex;
-        width: 200px;
-        height: 200px;
-        background-color: red;
-      }
-
-      .carousal > div {
-        flex: 3;
-        background-color: greenyellow;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="flex-box">
-      <div>
-        <svg width="50" height="50">
-          <path
-            d="M25,10c-5.5,0-10.5,2.8-13.5,7C6.5,18.9,5,24,5,29.5c0,6.6,4.4,12,10,12s10-5.4,10-12c0-1-.1-2-.4-3l-1-4h-4.6c.4-1.4,1.4-4.5,4.5-4.5c1.7,0,2.9,1,3.5,2.2c.6-1.2,1.8-2.2,3.5-2.2c3.1,0,4.1,3.1,4.5,4.5H30l-1,4c-.3,1.1-.4,2.2-.4,3c0,3.9,3.1,7,7,7s7-3.1,7-7c0-5.5-1.5-10.6-6.5-12.5C35.5,12.8,30.5,10,25,10z"
-            fill="#e74c3c"
-          />
-        </svg>
-      </div>
-      <div class="flex-item">
-        <div class="text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, voluptatum
-          accusamus? Nemo, reprehenderit facere. Illum deleniti reiciendis quae veritatis dolorum
-          est debitis? Debitis quas soluta non ea deserunt saepe at.
-        </div>
-      </div>
-      <div class="flex-item">side bar</div>
-      <div class="flex-item">
-        <h2>content</h2>
-        <div class="qqq">test</div>
-        <div class="qqq">test1</div>
-        <div class="qqq">test2</div>
-      </div>
-    </div>
-    <div class="flex-box2">
-      <div class="flex-item2">item</div>
-      <div class="flex-item2">item</div>
-      <div class="flex-item2">item</div>
-      <div class="flex-item2">item</div>
-      <div class="flex-item2">item</div>
-      <div class="flex-item2">item</div>
-      <div class="flex-item2">item</div>
-      <div class="flex-item2">item</div>
-    </div>
-
-    <div class="carousal">
-      <div>item1</div>
-    </div>
-  </body>
-  <script>
-    // 修改 dom class
-    const classnames = (...args) => (args.length ? args.join(' ') : '')
-    const qs = document.querySelectorAll('.qqq')
-    if (qs.length) {
-      qs.forEach((ele) => (ele.className = `${ele.className} ${classnames('aaa', '3313')}`))
-    }
-  </script>
-  <script>
-    // fiber dispatch bind
-    class FiberNode {
-      constructor(state, next) {
-        this.state = state
-        this.next = next
-      }
-    }
-
-    const header = new FiberNode({ name: 'header' })
-    let fibers = header
-    for (let index = 0; index < 100; index++) {
-      fibers.next = new FiberNode({ name: index })
-      fibers = fibers.next
-    }
-
-    let currentFiber = header
-
-    /**
-     * @param {FiberNode} fiberNode
-     */
-    function dispatch(fiberNode) {
-      console.log(fiberNode.state)
-    }
-    const dispatchBind = dispatch.bind(null, currentFiber)
-    currentFiber = currentFiber.next
-    console.log(currentFiber.state)
-    dispatchBind()
-  </script>
+			/* last-of-type，兄弟元素的最后一个 */
+			.flex-box > .flex-item:first-child {
+				flex: 0 0 200px;
+				background-color: aqua;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="flex-box">
+			<div>
+				<svg width="200" height="200">
+					<path
+						d="M25,10c-5.5,0-10.5,2.8-13.5,7C6.5,18.9,5,24,5,29.5c0,6.6,4.4,12,10,12s10-5.4,10-12c0-1-.1-2-.4-3l-1-4h-4.6c.4-1.4,1.4-4.5,4.5-4.5c1.7,0,2.9,1,3.5,2.2c.6-1.2,1.8-2.2,3.5-2.2c3.1,0,4.1,3.1,4.5,4.5H30l-1,4c-.3,1.1-.4,2.2-.4,3c0,3.9,3.1,7,7,7s7-3.1,7-7c0-5.5-1.5-10.6-6.5-12.5C35.5,12.8,30.5,10,25,10z"
+						fill="#e74c3c"
+					/>
+				</svg>
+			</div>
+			<div class="flex-item">
+				<div class="text">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, voluptatum
+					accusamus? Nemo, reprehenderit facere. Illum deleniti reiciendis quae veritatis dolorum
+					est debitis? Debitis quas soluta non ea deserunt saepe at.
+				</div>
+			</div>
+			<div class="flex-item">side bar</div>
+			<div class="flex-item">
+				<h2>content</h2>
+				<div class="qqq">test</div>
+				<div class="qqq">test1</div>
+				<div class="qqq">test2</div>
+			</div>
+		</div>
+	</body>
 </html>

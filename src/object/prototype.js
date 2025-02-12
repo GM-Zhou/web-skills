@@ -105,5 +105,6 @@ target.b = 3213123;
 
 const a = getter('a');
 const b = getter('b');
+
 console.log(a);
 console.log(b);
